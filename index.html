@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slideshow</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        #slideshow {
+            width: 800px;
+            height: 800px;
+            border: 5px solid #333;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        #slideshow img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        #slideshow img.active {
+            opacity: 1;
+        }
+        .controls {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .controls button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin: 0 10px;
+        }
+        .controls button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div id="slideshow">
+        <!-- 图片会通过 JavaScript 动态加载 -->
+    </div>
+    <div class="controls">
+        <button id="prev-btn">Previous</button>
+        <button id="next-btn">Next</button>
+    </div>
+    <script>
+        // 图片总数
+const totalImages = 7;
+
+// 获取 slideshow 容器
+const slideshow = document.getElementById('slideshow');
+
+// 动态加载图片
+for (let i = 1; i <= totalImages; i++) {
+    const img = document.createElement('img');
+    img.src = `common${i}.png`;
+    img.alt = `common${i}`;
+    slideshow.appendChild(img);
+}
+
+// 获取所有图片元素
+const images = slideshow.querySelectorAll('img');
+
+// 初始化当前显示的图片索引
+let currentIndex = 0;
+
+// 显示第一张图片
+images[currentIndex].classList.add('active');
+
+// 切换到下一张图片
+function nextImage() {
+    images[currentIndex].classList.remove('active');
+    currentIndex = (currentIndex + 1) % totalImages;
+    images[currentIndex].classList.add('active');
+}
+
+// 切换到上一张图片
+function prevImage() {
+    images[currentIndex].classList.remove('active');
+    currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+    images[currentIndex].classList.add('active');
+}
+
+// 自动轮播
+let interval = setInterval(nextImage, 1000);  // 每秒切换一次
+
+// 绑定按钮事件
+document.getElementById('next-btn').addEventListener('click', () => {
+    clearInterval(interval);  // 停止自动轮播
+    nextImage();
+    interval = setInterval(nextImage, 1000);  // 重新开始自动轮播
+});
+
+document.getElementById('prev-btn').addEventListener('click', () => {
+    clearInterval(interval);  // 停止自动轮播
+    prevImage();
+    interval = setInterval(nextImage, 1000);  // 重新开始自动轮播
+});
+    </script>
+</body>
+</html>
