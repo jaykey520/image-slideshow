@@ -97,19 +97,19 @@ function prevImage() {
 }
 
 // 自动轮播
-let interval = setInterval(nextImage, 1000);  // 每秒切换一次
+let interval = setInterval(nextImage, 200);  // 每秒切换一次
 
 // 绑定按钮事件
 document.getElementById('next-btn').addEventListener('click', () => {
     clearInterval(interval);  // 停止自动轮播
     nextImage();
-    interval = setInterval(nextImage, 1000);  // 重新开始自动轮播
+    interval = setInterval(nextImage, 200);  // 重新开始自动轮播
 });
 
 document.getElementById('prev-btn').addEventListener('click', () => {
     clearInterval(interval);  // 停止自动轮播
     prevImage();
-    interval = setInterval(nextImage, 1000);  // 重新开始自动轮播
+    interval = setInterval(nextImage, 200);  // 重新开始自动轮播
 });
     </script>
 </body>
